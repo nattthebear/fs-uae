@@ -2,6 +2,7 @@
 #define UAE_A2091_H
 
 #ifdef A2091
+#include "threaddep/thread.h"
 
 #define WD_STATUS_QUEUE 2
 

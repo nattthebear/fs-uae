@@ -1996,9 +1996,11 @@ static uae_u32 REGPARAM2 cia_bget (uaecptr addr)
 	if (!isgaylenocia (addr))
 		return dummy_get(addr, 1, false, 0);
 
+#ifdef DEBUGGING
 	if (memwatch_access_validator) {
 		validate_cia(addr, 0, 0);
 	}
+#endif
 
 	switch (cia_chipselect(addr))
 	{
@@ -2058,9 +2060,11 @@ static uae_u32 REGPARAM2 cia_wget (uaecptr addr)
 	if (!isgaylenocia (addr))
 		return dummy_get_safe(addr, 2, false, 0);
 
+#ifdef DEBUGGING
 	if (memwatch_access_validator) {
 		write_log(_T("CIA word read %08x PC=%08x\n"), addr, M68K_GETPC);
 	}
+#endif
 
 	switch (cia_chipselect(addr))
 	{
@@ -2135,9 +2139,11 @@ static void REGPARAM2 cia_bput (uaecptr addr, uae_u32 value)
 	if (!isgaylenocia (addr))
 		return;
 
+#ifdef DEBUGGING
 	if (memwatch_access_validator) {
 		validate_cia(addr, 1, value);
 	}
+#endif
 
 	int cs = cia_chipselect(addr);
 
@@ -2173,9 +2179,11 @@ static void REGPARAM2 cia_wput (uaecptr addr, uae_u32 value)
 	if (!isgaylenocia (addr))
 		return;
 
+#ifdef DEBUGGING
 	if (memwatch_access_validator) {
 		write_log(_T("CIA word write %08x = %04x PC=%08x\n"), addr, value & 0xffff, M68K_GETPC);
 	}
+#endif
 
 	int cs = cia_chipselect(addr);
 
