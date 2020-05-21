@@ -23,7 +23,7 @@
 
 #undef EVENT_DEBUG
 
-#include "machdep/rpt.h"
+#include "rpt.h"
 
 extern frame_time_t vsyncmintime, vsyncmintimepre;
 extern frame_time_t vsyncmaxtime, vsyncwaittime;

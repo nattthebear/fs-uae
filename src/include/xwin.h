@@ -14,7 +14,7 @@
 #include "uae/asm.h"
 #include <string.h>
 #endif
-#include "machdep/rpt.h"
+#include "rpt.h"
 
 #define MAX_AMIGADISPLAYS 4
 

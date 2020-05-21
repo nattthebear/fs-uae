@@ -422,8 +422,10 @@ STATIC_INLINE int canblit (int hpos)
 
 static void markidlecycle (int hpos)
 {
+#ifdef DEBUGGER
 	if (debug_dma)
 		record_dma_event (DMA_EVENT_BLITSTARTFINISH, hpos, vpos);
+#endif
 }
 
 static void reset_channel_mods (void)
@@ -476,8 +478,10 @@ static void blitter_interrupt (int hpos, int done)
 		return;
 	blit_interrupt = 1;
 	send_interrupt (6, 4 * CYCLE_UNIT);
+#ifdef DEBUGGER
 	if (debug_dma)
 		record_dma_event (DMA_EVENT_BLITIRQ, hpos, vpos);
+#endif
 }
 
 static void blitter_done (int hpos)
@@ -500,7 +504,9 @@ STATIC_INLINE void chipmem_agnus_wput2 (uaecptr addr, uae_u32 w)
 	//last_custom_value1 = w; blitter writes are not stored
 	if (!(log_blitter & 4)) {
 		chipmem_wput_indirect (addr, w);
+#ifdef DEBUGGER
 		debug_wputpeekdma_chipram (addr, w, MW_MASK_BLITTER_D_N, 0x000, 0x054);
+#endif
 	}
 }
 
@@ -707,7 +713,9 @@ STATIC_INLINE void blitter_read (void)
 		if (!dmaen (DMA_BLITTER))
 			return;
 		blt_info.bltcdat = chipmem_wget_indirect (bltcpt);
+#ifdef DEBUGGER
 		debug_wgetpeekdma_chipram (bltcpt, blt_info.bltcdat, MW_MASK_BLITTER_C, 0x070, 0x048);
+#endif
 		last_custom_value1 = blt_info.bltcdat;
 	}
 	bltstate = BLT_work;
@@ -723,7 +731,9 @@ STATIC_INLINE void blitter_write (void)
 			return;
 		//last_custom_value1 = blt_info.bltddat; blitter writes are not stored
 		chipmem_wput_indirect (bltdpt, blt_info.bltddat);
+#ifdef DEBUGGER
 		debug_wputpeekdma_chipram (bltdpt, blt_info.bltddat, MW_MASK_BLITTER_D_N, 0x000, 0x054);
+#endif
 	}
 	bltstate = BLT_next;
 }
@@ -1607,8 +1617,10 @@ static void do_blitter2(int hpos, int copper, uaecptr pc)
 		original_line = blitline;
 	}
 
+#ifdef DEBUGGER
 	if (memwatch_enabled)
 		blitter_debugsave(copper, pc);
+#endif
 
 	if ((log_blitter & 1) || ((log_blitter & 32) && !blitline)) {
 		blitter_dontdo = 0;

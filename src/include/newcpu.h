@@ -21,9 +21,9 @@
 #include "uae/asm.h"
 #endif
 #include "readcpu.h"
-#include "machdep/m68k.h"
+#include "m68k.h"
 #include "events.h"
-#include <softfloat/softfloat.h>
+#include <softfloat.h>
 
 #ifndef SET_CFLG
 
